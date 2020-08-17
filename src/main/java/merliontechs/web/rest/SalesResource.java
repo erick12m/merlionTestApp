@@ -1,5 +1,6 @@
 package merliontechs.web.rest;
 
+import io.github.jhipster.service.filter.LocalDateFilter;
 import merliontechs.domain.Sales;
 import merliontechs.repository.SalesRepository;
 import merliontechs.web.rest.errors.BadRequestAlertException;
@@ -10,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import sun.jvm.hotspot.ui.SAEditorPane;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing {@link merliontechs.domain.Sales}.
@@ -114,5 +116,21 @@ public class SalesResource {
         log.debug("REST request to delete Sales : {}", id);
         salesRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/sales")
+    public Map<Integer, Integer> obtenerVentasPorDia() {
+        List<Sales> ventas = getAllSales();
+        Map<Integer, Integer> dicVentas = new HashMap<Integer, Integer>();
+        for (Sales venta: ventas){
+           int fecha = venta.getDate().getDayOfYear();
+           if (!dicVentas.containsKey(fecha)){
+               dicVentas.put(fecha, 1);
+           }
+           else {
+               dicVentas.put(fecha, dicVentas.get(fecha) + 1);
+           }
+        }
+        return dicVentas;
     }
 }
