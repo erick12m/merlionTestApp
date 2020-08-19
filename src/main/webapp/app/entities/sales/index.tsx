@@ -8,6 +8,7 @@ import SalesDetail from './sales-detail';
 import SalesUpdate from './sales-update';
 import SalesDeleteDialog from './sales-delete-dialog';
 
+
 const Routes = ({ match }) => (
   <>
     <Switch>
