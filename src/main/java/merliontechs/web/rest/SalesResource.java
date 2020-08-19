@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import merliontechs.domain.enumeration.State;
 /**
  * REST controller for managing {@link merliontechs.domain.Sales}.
  */
@@ -138,12 +139,12 @@ public class SalesResource {
     }
 
     @GetMapping("/sales/delivered")
-    public List<SalesPorDia> obtenerVentasPorDia() {
+    public List<SalesPorDia> obtenerVentasDeliveredPorDia() {
         List<Sales> ventas = getAllSales();
         Map<LocalDate, SalesPorDia> dicVentas = new HashMap<LocalDate,SalesPorDia>();
         for (Sales venta: ventas){
            LocalDate fecha = venta.getDate();
-           State estado = venta.getState;
+           State estado = venta.getState();
            if (estado == State.DELIVERED){ 
                 if (!dicVentas.containsKey(fecha)){
                     dicVentas.put(fecha, new SalesPorDia(fecha));
