@@ -19,6 +19,11 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
 
+import { PureComponent } from 'react';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+} from 'recharts';
+
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
 export interface IAppProps extends StateProps, DispatchProps {}

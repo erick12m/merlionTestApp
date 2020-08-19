@@ -2,6 +2,7 @@ package merliontechs.web.rest;
 
 import io.github.jhipster.service.filter.LocalDateFilter;
 import merliontechs.domain.Sales;
+import merliontechs.domain.model.SalesPorDia;
 import merliontechs.repository.SalesRepository;
 import merliontechs.web.rest.errors.BadRequestAlertException;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -117,19 +119,21 @@ public class SalesResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
-    @GetMapping("/sales")
-    public Map<Integer, Integer> obtenerVentasPorDia() {
+    @GetMapping("/sales/all")
+    public List<SalesPorDia> obtenerVentasPorDia() {
         List<Sales> ventas = getAllSales();
-        Map<Integer, Integer> dicVentas = new HashMap<Integer, Integer>();
+        Map<LocalDate, SalesPorDia> dicVentas = new HashMap<LocalDate,SalesPorDia>();
         for (Sales venta: ventas){
-           int fecha = venta.getDate().getDayOfYear();
+           LocalDate fecha = venta.getDate();
            if (!dicVentas.containsKey(fecha)){
-               dicVentas.put(fecha, 1);
+               dicVentas.put(fecha, new SalesPorDia(fecha));
            }
            else {
-               dicVentas.put(fecha, dicVentas.get(fecha) + 1);
+               SalesPorDia salesActual = dicVentas.get(fecha);
+               salesActual.aumentarCantidadVentas();
+               dicVentas.put(fecha, salesActual);
            }
         }
-        return dicVentas;
+        return (new ArrayList<>(dicVentas.values()));
     }
 }
