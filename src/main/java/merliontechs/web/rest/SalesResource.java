@@ -136,4 +136,26 @@ public class SalesResource {
         }
         return (new ArrayList<>(dicVentas.values()));
     }
+
+    @GetMapping("/sales/delivered")
+    public List<SalesPorDia> obtenerVentasPorDia() {
+        List<Sales> ventas = getAllSales();
+        Map<LocalDate, SalesPorDia> dicVentas = new HashMap<LocalDate,SalesPorDia>();
+        for (Sales venta: ventas){
+           LocalDate fecha = venta.getDate();
+           State estado = venta.getState;
+           if (estado == State.DELIVERED){ 
+                if (!dicVentas.containsKey(fecha)){
+                    dicVentas.put(fecha, new SalesPorDia(fecha));
+                }
+                else {
+                    SalesPorDia salesActual = dicVentas.get(fecha);
+                    salesActual.aumentarCantidadVentas();
+                    dicVentas.put(fecha, salesActual);
+                }
+            }
+        }
+        return (new ArrayList<>(dicVentas.values()));
+    }
+
 }
