@@ -12,6 +12,7 @@ import ErrorBoundary from './shared/error/error-boundary';
 import AppComponent from './app';
 import { loadIcons } from './config/icon-loader';
 import GraficoVentasPorDia from './graficos/GraficoVentasPorDia';
+import GraficoVentasDeliveredPorDia from './graficos/GraficoVentasDeliveredPorDia';
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 
@@ -36,6 +37,7 @@ const render = Component =>
           <Component />
 
           <GraficoVentasPorDia />
+          <GraficoVentasDeliveredPorDia />
 
         </div>
       </Provider>

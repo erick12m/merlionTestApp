@@ -5,18 +5,28 @@ import {
 
 // TODO parsear la data directamente desde la API
 const data = [
-               { fecha: "2020-08-17", cantidadVentas: 2 },
-               { fecha: "2020-08-16", cantidadVentas: 8 }
-            ];
+    {
+      "fecha": "2020-08-22",
+      "cantidadVentas": 6
+    },
+    {
+      "fecha": "2020-08-21",
+      "cantidadVentas": 3
+    },
+    {
+      "fecha": "2020-08-19",
+      "cantidadVentas": 7
+    }
+  ]
 
 
-const GraficoVentasPorDia: React.FC = () => {
+const GraficoVentasDeliveredPorDia: React.FC = () => {
 
     return (
         <LineChart
             width={500}
             height={300}
-            data={data
+            data={data}
             margin={{
               top: 5, right: 30, left: 20, bottom: 5,
             }}
@@ -31,4 +41,4 @@ const GraficoVentasPorDia: React.FC = () => {
     );
 };
 
-export default GraficoVentasPorDia;
+export default GraficoVentasDeliveredPorDia;
