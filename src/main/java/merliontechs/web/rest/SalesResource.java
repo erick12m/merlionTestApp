@@ -1,8 +1,11 @@
 package merliontechs.web.rest;
 
-import io.github.jhipster.service.filter.LocalDateFilter;
+import merliontechs.domain.Product;
 import merliontechs.domain.Sales;
+import merliontechs.domain.model.ProductoVendido;
 import merliontechs.domain.model.SalesPorDia;
+import merliontechs.domain.model.SortProductosIngresos;
+import merliontechs.domain.model.SortProductosVentas;
 import merliontechs.repository.SalesRepository;
 import merliontechs.web.rest.errors.BadRequestAlertException;
 
@@ -38,6 +41,8 @@ public class SalesResource {
     private String applicationName;
 
     private final SalesRepository salesRepository;
+
+
 
     public SalesResource(SalesRepository salesRepository) {
         this.salesRepository = salesRepository;
@@ -126,14 +131,7 @@ public class SalesResource {
         Map<LocalDate, SalesPorDia> dicVentas = new HashMap<LocalDate,SalesPorDia>();
         for (Sales venta: ventas){
            LocalDate fecha = venta.getDate();
-           if (!dicVentas.containsKey(fecha)){
-               dicVentas.put(fecha, new SalesPorDia(fecha));
-           }
-           else {
-               SalesPorDia salesActual = dicVentas.get(fecha);
-               salesActual.aumentarCantidadVentas();
-               dicVentas.put(fecha, salesActual);
-           }
+            ingresarAlDiccionario(dicVentas, fecha);
         }
         return (new ArrayList<>(dicVentas.values()));
     }
@@ -145,18 +143,62 @@ public class SalesResource {
         for (Sales venta: ventas){
            LocalDate fecha = venta.getDate();
            State estado = venta.getState();
-           if (estado == State.DELIVERED){ 
-                if (!dicVentas.containsKey(fecha)){
-                    dicVentas.put(fecha, new SalesPorDia(fecha));
-                }
-                else {
-                    SalesPorDia salesActual = dicVentas.get(fecha);
-                    salesActual.aumentarCantidadVentas();
-                    dicVentas.put(fecha, salesActual);
-                }
-            }
+           if (estado == State.DELIVERED){
+               ingresarAlDiccionario(dicVentas, fecha);
+           }
         }
         return (new ArrayList<>(dicVentas.values()));
     }
 
+    @GetMapping("/sales/more-selled")
+    public List<ProductoVendido> obtenerProductosMasVendidos() {
+        List<ProductoVendido> listaProductosVendidos = getListaProductoVendidos();
+        listaProductosVendidos.sort(new SortProductosVentas());
+        return getTop5Productos(listaProductosVendidos);
+    }
+
+    @GetMapping("/sales/more-entry")
+    public List<ProductoVendido> obtenerProductosConMasIngreso() {
+        List<ProductoVendido> listaProductosVendidos = getListaProductoVendidos();
+        listaProductosVendidos.sort(new SortProductosIngresos());
+        return getTop5Productos(listaProductosVendidos);
+    }
+
+    private void ingresarAlDiccionario(Map<LocalDate, SalesPorDia> dicVentas, LocalDate fecha) {
+        if (!dicVentas.containsKey(fecha)) {
+            dicVentas.put(fecha, new SalesPorDia(fecha));
+        } else {
+            SalesPorDia salesActual = dicVentas.get(fecha);
+            salesActual.aumentarCantidadVentas();
+            dicVentas.put(fecha, salesActual);
+        }
+    }
+
+    private List<ProductoVendido> getTop5Productos(List<ProductoVendido> listaProductosVendidos) {
+        List<ProductoVendido> top5 = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            top5.add(listaProductosVendidos.get(i));
+        }
+        return top5;
+    }
+
+    private List<ProductoVendido> getListaProductoVendidos() {
+        List<Sales> ventas = getAllSales();
+        Map<Long, ProductoVendido> dicProductos = new HashMap<Long, ProductoVendido>();
+        for (Sales venta: ventas){
+            Product producto = venta.getProduct();
+            Long id = producto.getId();
+            if (!dicProductos.containsKey(id)){
+                dicProductos.put(id, new ProductoVendido(producto.getName(), producto.getPrice()));
+            }
+            else {
+                ProductoVendido productoActual = dicProductos.get(id);
+                productoActual.aumentarCantidadVentas();
+                productoActual.aumentarIngresos(producto.getPrice());
+                dicProductos.put(id, productoActual);
+            }
+        }
+        List<ProductoVendido> listaProductosVendidos = new ArrayList<>(dicProductos.values());
+        return listaProductosVendidos;
+    }
 }

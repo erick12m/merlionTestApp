@@ -9,7 +9,7 @@ public class SalesPorDia {
 
     public SalesPorDia(LocalDate fecha) {
         this.fecha = fecha;
-        cantidadVentas = 1;
+        this.cantidadVentas = 1;
     }
 
     public LocalDate getFecha() {
