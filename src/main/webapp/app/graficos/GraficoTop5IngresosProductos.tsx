@@ -1,47 +1,33 @@
 import React from "react";
-import {ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar
+import {
+  ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar
 } from "recharts";
+import axios from 'axios';
 
-// TODO parsear la data directamente desde la API
-const data = [
-    {
-      "name": "cross-platform support",
-      "ingresos": 98666,
-      "ventas": 3
-    },
-    {
-      "name": "reboot deposit Sri Lanka Rupee",
-      "ingresos": 86953,
-      "ventas": 4
-    },
-    {
-      "name": "Assistant",
-      "ingresos": 74211,
-      "ventas": 2
-    },
-    {
-      "name": "Internal compressing",
-      "ingresos": 55080,
-      "ventas": 4
-    },
-    {
-      "name": "Generic Steel Tuna",
-      "ingresos": 53676,
-      "ventas": 2
-    }
-  ]
+const apiUrl = 'api/sales/more-entry';
 
-const GraficoTop5IngresosProductos: React.FC = () => {
-  return (
-    
-      <ResponsiveContainer 
-      width={500}
-      height={300}
+export default class GraficoTop5IngresosProductos extends React.Component {
+
+  state = {
+    data: [],
+  };
+
+  componentDidMount() {
+    axios.get(`${apiUrl}`)
+      .then(res => {
+        this.setState({ data: res.data });
+      })
+  }
+  render() {
+    return (
+      <ResponsiveContainer
+        width={500}
+        height={300}
       >
-        <BarChart 
-        data={data}
-        fontSize={14}
-        layout="vertical"
+        <BarChart
+          data={this.state.data}
+          fontSize={14}
+          layout="vertical"
         >
           <CartesianGrid
             vertical={false}
@@ -60,8 +46,7 @@ const GraficoTop5IngresosProductos: React.FC = () => {
           <Bar dataKey="ingresos" fill="#3066BE" unit="$" name="Ingresos" />
         </BarChart>
       </ResponsiveContainer>
-    
-  );
-};
+    );
+  }
+}
 
-export default GraficoTop5IngresosProductos;

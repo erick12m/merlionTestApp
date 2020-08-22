@@ -1,44 +1,42 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
-// TODO parsear la data directamente desde la API
-const data = [
-    {
-      "fecha": "2020-08-22",
-      "cantidadVentas": 6
-    },
-    {
-      "fecha": "2020-08-21",
-      "cantidadVentas": 3
-    },
-    {
-      "fecha": "2020-08-19",
-      "cantidadVentas": 7
-    }
-  ]
+import axios from 'axios';
 
+const apiUrl = 'api/sales/delivered';
 
-const GraficoVentasDeliveredPorDia: React.FC = () => {
+export default class GraficoVentasDeliveredPorDia extends React.Component {
 
+  state = {
+    data: [],
+  };
+
+  componentDidMount() {
+    axios.get(`${apiUrl}`)
+      .then(res => {
+        this.setState({ data: res.data });
+      })
+  }
+  render() {
     return (
-        <LineChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-              top: 5, right: 30, left: 20, bottom: 5,
-            }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="fecha" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="cantidadVentas" stroke="#8884d8" activeDot={{ r: 8 }} />
-          </LineChart>
+      <LineChart
+        width={500}
+        height={300}
+        data={this.state.data}
+        margin={{
+          top: 5, right: 30, left: 20, bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="fecha" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="cantidadVentas" stroke="#8884d8" activeDot={{ r: 8 }} />
+      </LineChart>
     );
-};
+  }
+}
 
-export default GraficoVentasDeliveredPorDia;
