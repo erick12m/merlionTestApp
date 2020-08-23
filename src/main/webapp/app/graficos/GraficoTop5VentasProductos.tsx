@@ -45,7 +45,7 @@ export default class GraficoTop5VentasProductos extends React.Component {
             <Tooltip
               cursor={false}
             />
-            <Bar dataKey="ventas" fill="#3066BE" unit=" ventas" name="Ventas" />
+            <Bar dataKey="ventas" fill="#2A6A9E" unit=" ventas" name="Ventas" />
           </BarChart>
         </ResponsiveContainer>
       </ GraficosCard>

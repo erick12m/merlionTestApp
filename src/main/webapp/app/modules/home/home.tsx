@@ -32,7 +32,11 @@ export const Home = (props: IHomeProp) => {
               <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
                 You are logged in as user {account.login}.
               </Translate>
-            </Alert>
+            </Alert>           
+            <GraficoVentasPorDia />
+            <GraficoVentasDeliveredPorDia />
+            <GraficoTop5VentasProductos />
+            <GraficoTop5IngresosProductos />
           </div>
         ) : (
           <div>
@@ -56,14 +60,6 @@ export const Home = (props: IHomeProp) => {
             </Alert>
           </div>
         )}
-      
-          <div>
-            <GraficoVentasPorDia />
-            <GraficoVentasDeliveredPorDia />
-            <GraficoTop5VentasProductos />
-            <GraficoTop5IngresosProductos />
-          </div>
-
       </Col>
       <Col md="3" className="pad">
         <span className="hipster rounded" />
