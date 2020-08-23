@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 import { Row, Col, Alert } from 'reactstrap';
 
 import { IRootState } from 'app/shared/reducers';
+import GraficoVentasPorDia from 'app/graficos/GraficoVentasPorDia';
+import GraficoVentasDeliveredPorDia from 'app/graficos/GraficoVentasDeliveredPorDia';
+import GraficoTop5VentasProductos from 'app/graficos/GraficoTop5VentasProductos';
+import GraficoTop5IngresosProductos from 'app/graficos/GraficoTop5IngresosProductos';
 
 export type IHomeProp = StateProps;
 
@@ -52,45 +56,14 @@ export const Home = (props: IHomeProp) => {
             </Alert>
           </div>
         )}
-        <p>
-          <Translate contentKey="home.question">If you have any question on JHipster:</Translate>
-        </p>
+      
+          <div>
+            <GraficoVentasPorDia />
+            <GraficoVentasDeliveredPorDia />
+            <GraficoTop5VentasProductos />
+            <GraficoTop5IngresosProductos />
+          </div>
 
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.stackoverflow">JHipster on Stack Overflow</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.chat">JHipster public chat room</Translate>
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              <Translate contentKey="home.link.follow">follow @jhipster on Twitter</Translate>
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            Github
-          </a>
-          !
-        </p>
       </Col>
       <Col md="3" className="pad">
         <span className="hipster rounded" />

@@ -11,10 +11,7 @@ import { clearAuthentication } from './shared/reducers/authentication';
 import ErrorBoundary from './shared/error/error-boundary';
 import AppComponent from './app';
 import { loadIcons } from './config/icon-loader';
-import GraficoVentasPorDia from './graficos/GraficoVentasPorDia';
-import GraficoVentasDeliveredPorDia from './graficos/GraficoVentasDeliveredPorDia';
-import GraficoTop5VentasProductos from './graficos/GraficoTop5VentasProductos';
-import GraficoTop5IngresosProductos from './graficos/GraficoTop5IngresosProductos';
+
 
 const devTools = process.env.NODE_ENV === 'development' ? <DevTools /> : null;
 
@@ -37,13 +34,6 @@ const render = Component =>
           {/* If this slows down the app in dev disable it and enable when required  */}
           {devTools}
           <Component />
-
-          <GraficoVentasPorDia />
-          <GraficoVentasDeliveredPorDia />
-          <GraficoTop5VentasProductos />
-          <GraficoTop5IngresosProductos />
-
-
         </div>
       </Provider>
     </ErrorBoundary>,
