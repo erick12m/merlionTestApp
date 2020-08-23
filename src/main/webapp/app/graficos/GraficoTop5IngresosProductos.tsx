@@ -3,6 +3,7 @@ import {
   ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar
 } from "recharts";
 import axios from 'axios';
+import GraficosCard from './graficosCard/GraficosCard';
 
 const apiUrl = 'api/sales/more-entry';
 
@@ -20,32 +21,34 @@ export default class GraficoTop5IngresosProductos extends React.Component {
   }
   render() {
     return (
-      <ResponsiveContainer
-        width={500}
-        height={300}
-      >
-        <BarChart
-          data={this.state.data}
-          fontSize={14}
-          layout="vertical"
+      <GraficosCard heading="Productos con más beneficios">
+        <ResponsiveContainer
+          width="100%"
+          height={300}
         >
-          <CartesianGrid
-            vertical={false}
-            stroke="#d6d9da"
-            strokeDasharray="3 3"
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tickLine={false}
-          />
-          <XAxis unit="$" type="number" width={35} axisLine={false} tickLine={false} />
-          <Tooltip
-            cursor={false}
-          />
-          <Bar dataKey="ingresos" fill="#3066BE" unit="$" name="Ingresos" />
-        </BarChart>
-      </ResponsiveContainer>
+          <BarChart
+            data={this.state.data}
+            fontSize={14}
+            layout="vertical"
+          >
+            <CartesianGrid
+              vertical={false}
+              stroke="#d6d9da"
+              strokeDasharray="3 3"
+            />
+            <YAxis
+              type="category"
+              dataKey="name"
+              tickLine={false}
+            />
+            <XAxis unit="$" type="number" width={35} axisLine={false} tickLine={false} />
+            <Tooltip
+              cursor={false}
+            />
+            <Bar dataKey="ingresos" fill="#3066BE" unit="$" name="Ingresos" />
+          </BarChart>
+        </ResponsiveContainer>
+      </GraficosCard>
     );
   }
 }
