@@ -56,7 +56,9 @@ export default class GraficoTop5IngresosProductos extends React.Component {
               dataKey="ingresos" 
               fill="#2A6A95" 
               unit="$" 
-              name="Ingresos" />
+              name="Ingresos" 
+              barSize={30} 
+              />
           </BarChart>
         </ResponsiveContainer>
       </GraficosCard>
