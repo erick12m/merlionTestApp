@@ -37,10 +37,18 @@ export default class GraficoVentasDeliveredPorDia extends React.Component {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="fecha" />
-            <YAxis />
+            <YAxis 
+              width={35}
+            />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="cantidadVentas" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line 
+              type="monotone" 
+              dataKey="cantidadVentas"
+              stroke="#2A6A9E"
+              name="Ventas Realizadas"
+              activeDot={{ r: 8 }} 
+            />
           </LineChart>
         </ResponsiveContainer>
       </GraficosCard>
