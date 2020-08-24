@@ -2,10 +2,7 @@ package merliontechs.web.rest;
 
 import merliontechs.domain.Product;
 import merliontechs.domain.Sales;
-import merliontechs.domain.model.ProductoVendido;
-import merliontechs.domain.model.SalesPorDia;
-import merliontechs.domain.model.SortProductosIngresos;
-import merliontechs.domain.model.SortProductosVentas;
+import merliontechs.domain.model.*;
 import merliontechs.repository.SalesRepository;
 import merliontechs.web.rest.errors.BadRequestAlertException;
 
@@ -133,7 +130,13 @@ public class SalesResource {
            LocalDate fecha = venta.getDate();
             ingresarAlDiccionario(dicVentas, fecha);
         }
-        return (new ArrayList<>(dicVentas.values()));
+        return getListaSalesPorDias(dicVentas);
+    }
+
+    private List<SalesPorDia> getListaSalesPorDias(Map<LocalDate, SalesPorDia> dicVentas) {
+        List<SalesPorDia> listaVentas = new ArrayList<>(dicVentas.values());
+        listaVentas.sort(new SortPorFecha());
+        return listaVentas;
     }
 
     @GetMapping("/sales/delivered")
@@ -147,7 +150,7 @@ public class SalesResource {
                ingresarAlDiccionario(dicVentas, fecha);
            }
         }
-        return (new ArrayList<>(dicVentas.values()));
+        return getListaSalesPorDias(dicVentas);
     }
 
     @GetMapping("/sales/more-selled")
