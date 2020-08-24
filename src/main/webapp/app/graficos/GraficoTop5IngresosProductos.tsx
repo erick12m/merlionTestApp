@@ -37,15 +37,26 @@ export default class GraficoTop5IngresosProductos extends React.Component {
               strokeDasharray="3 3"
             />
             <YAxis
+              width={180}
               type="category"
               dataKey="name"
               tickLine={false}
+              scaleToFit={true}
             />
-            <XAxis unit="$" type="number" width={35} axisLine={false} tickLine={false} />
+            <XAxis
+              width={180}
+              unit="$" 
+              type="number" 
+              axisLine={false} 
+              tickLine={false} />
             <Tooltip
               cursor={false}
             />
-            <Bar dataKey="ingresos" fill="#2A6A95" unit="$" name="Ingresos" />
+            <Bar 
+              dataKey="ingresos" 
+              fill="#2A6A95" 
+              unit="$" 
+              name="Ingresos" />
           </BarChart>
         </ResponsiveContainer>
       </GraficosCard>
