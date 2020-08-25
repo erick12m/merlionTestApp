@@ -29,9 +29,10 @@ public class ProductoVendido {
 
     public void aumentarCantidadVentas() {
         this.cantidadVentas += 1;
+
     }
 
     public void aumentarIngresos(BigDecimal price) {
-        this.ingresos.add(price);
+        this.ingresos = this.ingresos.add(price);
     }
 }
