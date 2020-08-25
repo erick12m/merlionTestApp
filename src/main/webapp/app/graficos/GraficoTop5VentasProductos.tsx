@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar
+  ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar
 } from "recharts";
 import axios from 'axios';
 import GraficosCard from './graficosCard/GraficosCard';

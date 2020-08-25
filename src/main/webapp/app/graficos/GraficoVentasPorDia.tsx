@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip
 } from 'recharts';
 import axios from 'axios';
 import GraficosCard from './graficosCard/GraficosCard';
@@ -40,7 +40,6 @@ export default class GraficoVentasPorDia extends React.Component {
               width={35}
             />
             <Tooltip />
-            <Legend />
             <Line type="monotone" 
               dataKey="cantidadVentas"
               stroke="#2A6A9E"
